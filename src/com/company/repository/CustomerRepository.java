@@ -3,6 +3,7 @@ package com.company.repository;
 import com.company.connection.MySqlConnectionManager;
 import com.company.domain.Customer;
 import com.company.exceptions.AccessDatabaseException;
+import com.company.exceptions.DeleteValueException;
 import com.company.exceptions.InsertValueException;
 import org.tinylog.Logger;
 
@@ -47,7 +48,6 @@ public class CustomerRepository implements RepositoryInterface<Customer>{
         }
     }
 
-
     @Override
     public List<Customer> getAll() throws AccessDatabaseException {
        List<Customer> customers = new ArrayList<Customer>();
@@ -79,6 +79,20 @@ public class CustomerRepository implements RepositoryInterface<Customer>{
            throw new AccessDatabaseException("Could not access database.");
        }
        return customers;
+    }
+
+    @Override
+    public void deleteById(long customerNumber) throws DeleteValueException {
+        String deleteFromTable = "DELETE FROM customers WHERE customerNumber = ?";
+        try(Connection connection = sqlConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteFromTable)
+        ) {
+            preparedStatement.setLong(1, customerNumber);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            Logger.error("Could not delete data from table.");
+            throw new DeleteValueException("Could not delete data from table.");
+        }
     }
 
 }

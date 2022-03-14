@@ -15,7 +15,9 @@ public class CompanyApplicationMain {
         Customer customer = new Customer(497, "Capgemini", "Badea", "Andreea", "+40703432201",
                 "Splaiul Independentei", "Str. Manastirii",
                 "Bucharest", null, "245800", "Romania", 1370, 25000);
-        customerService.addCustomerToTable(customer);
+      //  customerService.addCustomerToTable(customer);
+
+      //  customerService.deleteCustomerById(496);
 
     }
 
