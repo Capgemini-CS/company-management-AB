@@ -1,5 +1,6 @@
 package com.company.repository;
 
+import com.company.connection.ConnectionManager;
 import com.company.connection.MySqlConnectionManager;
 import com.company.domain.Customer;
 import com.company.exceptions.AccessDatabaseException;
@@ -16,11 +17,11 @@ import java.util.List;
 
 public class CustomerRepository implements RepositoryInterface<Customer>{
 
-    private MySqlConnectionManager sqlConnection = new MySqlConnectionManager();
+    private ConnectionManager sqlConnection = new MySqlConnectionManager();
 
 
     @Override
-    public void addToTable(Customer customer) throws InsertValueException {
+    public void add(Customer customer) throws InsertValueException {
         String addCustomerQuery = "INSERT INTO customers " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try(Connection connection = sqlConnection.getConnection();

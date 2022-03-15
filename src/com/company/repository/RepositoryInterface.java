@@ -11,7 +11,7 @@ public interface RepositoryInterface<T> {
 
    List<T> getAll() throws AccessDatabaseException;
 
-   void addToTable(T dataType) throws InsertValueException;
+   void add(T dataType) throws InsertValueException;
 
    void deleteById(long id) throws DeleteValueException;
 

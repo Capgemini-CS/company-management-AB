@@ -25,7 +25,7 @@ public class CustomerService {
 
     public void addCustomerToTable(Customer customer) {
         try {
-            customerRepository.addToTable(customer);
+            customerRepository.add(customer);
             Logger.info("Customer id {} added to database.", customer.getCustomerNumber());
         } catch (InsertValueException e) {
             Logger.error("Could not insert customer in the database.");
