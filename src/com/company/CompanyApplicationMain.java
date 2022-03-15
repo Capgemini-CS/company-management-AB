@@ -1,7 +1,12 @@
 package com.company;
 
 import com.company.domain.Customer;
+import com.company.exceptions.AccessDatabaseException;
+import com.company.repository.CustomerRepository;
+import com.company.repository.RepositoryInterface;
 import com.company.service.CustomerService;
+import com.company.service.dto.CustomerDto;
+import org.tinylog.Logger;
 
 import java.util.List;
 
@@ -9,8 +14,14 @@ public class CompanyApplicationMain {
 
     public static void main(String[] args) {
 
-        CustomerService customerService = new CustomerService();
-        List<Customer> customers = customerService.getAllCustomers();
+        RepositoryInterface<Customer> customerRepository = new CustomerRepository();
+        CustomerService customerService = new CustomerService(customerRepository);
+
+        try {
+            List<CustomerDto> customers = customerService.getAllCustomers();
+        } catch (AccessDatabaseException e) {
+            Logger.error("Could not access database.");
+        }
 
         Customer customer = new Customer(497, "Capgemini", "Badea", "Andreea", "+40703432201",
                 "Splaiul Independentei", "Str. Manastirii",
